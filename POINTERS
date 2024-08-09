@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+struct product {
+    char name[150];
+    char id[150];
+    float price;
+};
+int main() {
+    int n;
+    float totalcost = 0.0;
+    struct product* mostexpensive;
+    struct product* lowestpriced;
+    printf("Enter number of the products: ");
+    scanf("%d", &n);
+    struct product p[n];
+    for (int i = 0; i < n; i++) {
+        printf("Product %d:\n", i + 1);
+        printf("Product name: ");
+        scanf("%s", p[i].name);
+        printf("Product ID: ");
+        scanf("%s", p[i].id);
+        printf("Price: ");
+        scanf("%f", &p[i].price);
+        totalcost += p[i].price;
+        if (i == 0) {
+            mostexpensive = &p[i];
+            lowestpriced = &p[i];
+        } else {
+            if (p[i].price > mostexpensive->price) {
+                mostexpensive = &p[i];
+            }
+            if (p[i].price < lowestpriced->price) {
+                lowestpriced = &p[i];
+            }
+        }
+        printf("\n");
+    }
+    for (int i = 0; i < n; i++) {
+        printf("Product %d details:\n", i + 1);
+        printf("Product name: %s\n", p[i].name);
+        printf("Product ID: %s\n", p[i].id);
+        printf("Price: %.2f\n", p[i].price);
+        printf("\n");
+    }
+    printf("Total cost: %.2f\n", totalcost);
+    printf("Most expensive product: %s (%.2f)\n", mostexpensive->name, mostexpensive->price);
+    printf("Lowest priced product: %s (%.2f)\n", lowestpriced->name, lowestpriced->price);
+    return 0;
+}
