@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <string.h>
+struct friends {
+    char name[50];
+    char pet_name[50];
+    int phone_number;
+};
+struct type {
+    char type_of_friends[50];
+    char common_friends[50];
+    char places_visited_together[150];
+    struct friends fr;
+};
+int main() {
+    int n;
+    printf("Number of friends: ");
+    scanf("%d", &n);
+    struct type t[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter details for friend %d:\n", i + 1);
+        printf("Enter your name: ");
+        scanf("%s", t[i].fr.name);
+        printf("Enter your pet's name: ");
+        scanf("%s", t[i].fr.pet_name);
+        printf("Enter your phone number: ");
+        scanf("%d", &t[i].fr.phone_number);
+
+        printf("Enter common friends: ");
+        scanf("%s", t[i].common_friends);
+        printf("Enter type of friends: ");
+        scanf("%s", t[i].type_of_friends);
+        printf("Enter places visited together: ");
+        scanf("%s", t[i].places_visited_together);
+        printf("\n");
+    }
+    printf("Details of friends:\n");
+    printf("%-20s %-20s %-15s %-30s %-20s %-30s\n",
+           "Name", "Pet Name", "Phone Number", "Common Friends", "Type of Friends", "Places Visited Together");
+  for (int i = 0; i < n; i++) {
+        printf("%-20s %-20s %-15d %-30s %-20s %-30s\n",
+               t[i].fr.name,
+               t[i].fr.pet_name,
+               t[i].fr.phone_number,
+               t[i].common_friends,
+               t[i].type_of_friends,
+               t[i].places_visited_together);
+    }
+    FILE *file = fopen("friends_data.csv", "w");
+    if (file == NULL) {
+        printf("\n");
+        return 1;
+   }
+    fprintf(file, "Name,Pet Name,Phone Number,Common Friends,Type of Friends,Places Visited Together\n");
+    for (int i = 0; i < n; i++) {
+        fprintf(file, "%s,%s,%d,%s,%s,%s\n",
+                t[i].fr.name,
+                t[i].fr.pet_name,
+                t[i].fr.phone_number,
+                t[i].common_friends,
+                t[i].type_of_friends,
+                t[i].places_visited_together);
+    }
+
+    fclose(file);
+    printf("Data successfully written to friends_data.csv\n");
+    return 0;
+}
